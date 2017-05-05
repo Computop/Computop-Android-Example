@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name" translatable="false">Computop Android Example</string>
+
+    <!-- computop -->
+    <string name="computop_merchant_id" translatable="false">test</string>
+    <string name="computop_auth_url" translatable="false">https://computop.example.com/api/auth</string>
+
+
+</resources>
