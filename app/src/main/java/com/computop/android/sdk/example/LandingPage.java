@@ -186,6 +186,9 @@ public class LandingPage extends Fragment {
         //set payment method that has the right payment data, and checkout
         disposable = computop
                 .withPaymentMethod(method)
+                .setWebViewListener(() -> {
+                    Log.i(TAG, "[WebViewClient] onPageFinishedLoading");
+                })
                 .checkout()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
