@@ -60,7 +60,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Computop sdk dependency
-    compile 'com.computop.sdk:lib:1.3.130'
+    compile 'com.computop.sdk:lib:1.3.133'
 
     compile 'com.android.support:appcompat-v7:'+supportLibVer
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
