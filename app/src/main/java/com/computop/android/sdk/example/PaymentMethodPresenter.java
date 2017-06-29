@@ -18,7 +18,7 @@ import butterknife.BindView;
  * Created by armando.shkurti on 27/03/17.
  */
 
-class PaymentMethodPresenter extends Presenter<PaymentMethod, PaymentMethodPresenter.ViewHolder> {
+public class PaymentMethodPresenter extends Presenter<PaymentMethod, PaymentMethodPresenter.ViewHolder> {
 
     public PaymentMethodPresenter(@NonNull PresenterAdapter<PaymentMethod> presenterAdapter) {
         super(presenterAdapter);
