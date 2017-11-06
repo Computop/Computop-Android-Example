@@ -242,6 +242,7 @@ public class LandingPage extends Fragment {
         payment.setParamWithKey("eMail", "****");
         payment.setParamWithKey("ShopID", "1");
         payment.setParamWithKey("Subject", "****");
+        payment.setParamWithKey("Language", "en");
 
         return payment;
     }
