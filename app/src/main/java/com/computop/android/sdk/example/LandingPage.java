@@ -224,7 +224,7 @@ public class LandingPage extends Fragment {
 
         payment.setParamWithKey("TransID", "****");
         payment.setParamWithKey("Amount", String.valueOf(price * 100));
-        payment.setParamWithKey("Currency", "EUR");
+        payment.setParamWithKey("Currency", "EUR"); //for Wechat payment only CNY is supported
         payment.setParamWithKey("URLSuccess", "****");
         payment.setParamWithKey("URLNotify", "****");
         payment.setParamWithKey("URLFailure", "****");
@@ -243,6 +243,8 @@ public class LandingPage extends Fragment {
         payment.setParamWithKey("ShopID", "1");
         payment.setParamWithKey("Subject", "****");
         payment.setParamWithKey("Language", "en");
+        payment.setParamWithKey("Channel", "APP");
+        payment.setParamWithKey("MerchantID", "****");
 
         return payment;
     }
