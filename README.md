@@ -16,7 +16,7 @@ Android SDK for [Computop](https://www.computop.com/).
 #### Build Requirements
 
 - JDK7, JDK8
-- Android Build Tools 27.0.0
+- Android Build Tools 27.0.3
 - Android SDK 27 
 - Android min SDK API 15
 
