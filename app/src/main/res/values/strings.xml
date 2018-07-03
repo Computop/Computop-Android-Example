@@ -5,5 +5,13 @@
     <string name="computop_merchant_id" translatable="false">test</string>
     <string name="computop_auth_url" translatable="false">https://computop.example.com/api/auth</string>
 
+    <!-- computop WeChat -->
+    <string name="computop_wechat_app_id" translatable="false">your wechat app id</string>
+    <string name="computop_wechat_mch_id" translatable="false">your wechat merchant id</string>
+    <string name="computop_wechat_key" translatable="false">your wechat key</string>
+
+    <!-- computop PayPal -->
+    <string name="computop_paypal_intent_uri_host" translatable="false">com.shop.demo.PayPalReturn</string>
+    <string name="computop_paypal_intent_uri_scheme" translatable="false">merchant</string>
 
 </resources>
