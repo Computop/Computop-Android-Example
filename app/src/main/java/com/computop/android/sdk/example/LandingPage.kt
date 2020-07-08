@@ -33,6 +33,7 @@ class LandingPage : Fragment() {
         get() = _binding!!
 
     private var disposable: Disposable? = null
+    private var paymentDisposable: Disposable? = null
 
     private val articles = ArrayList(Arrays.asList(
         Article().setName("Buildmaster 2013").setColor("Color: Black").setPrice("20").setImage(R.drawable.black),
@@ -113,7 +114,7 @@ class LandingPage : Fragment() {
         binding.paymentMethodsList.adapter = paymentMethodAdapter
 
         //load payment methods
-        computop!!.requestPaymentMethods().subscribeOn(Schedulers.io())
+        paymentDisposable = computop!!.requestPaymentMethods().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { paymentMethods: List<PaymentMethod?>, throwable: Throwable? ->
                 if (throwable != null) {
@@ -146,12 +147,16 @@ class LandingPage : Fragment() {
             computop!!.clean()
         }
 
-        if (disposable != null && !disposable!!.isDisposed) {
+        if (disposable != null && disposable?.isDisposed == false) {
             disposable!!.dispose()
+        }
+
+        if (paymentDisposable != null && paymentDisposable?.isDisposed == false) {
+            paymentDisposable!!.dispose()
         }
     }
 
-    fun payWithPaymentOption(method: PaymentMethod) {
+    private fun payWithPaymentOption(method: PaymentMethod) {
         setPayment(method.payment)
 
         //set payment method that has the right payment data, and checkout
@@ -185,7 +190,7 @@ class LandingPage : Fragment() {
      * @param payment
      * @return
      */
-    fun setPayment(payment: Payment): Payment {
+    private fun setPayment(payment: Payment): Payment {
         var price = 0
         for (article in basket) {
             price += article.price?.toInt() ?: 0
@@ -216,7 +221,7 @@ class LandingPage : Fragment() {
         return payment
     }
 
-    fun showErrorAlert(error: ComputopError) {
+    private fun showErrorAlert(error: ComputopError) {
         val code = error.code
         val severity = error.severity
         val category = error.category
