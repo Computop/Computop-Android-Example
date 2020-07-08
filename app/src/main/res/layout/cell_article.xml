@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cell_article"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:orientation="horizontal">
@@ -21,30 +23,30 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Baumeister 2013"
             android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="Baumeister 2013" />
 
         <TextView
             android:id="@+id/color"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="Farbe: Schwarz"
             android:textColor="@android:color/black"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="Farbe: Schwarz" />
 
         <TextView
             android:id="@+id/price"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Preis: 20.Stk 3€"
             android:textColor="@android:color/black"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="Preis: 20.Stk 3€" />
 
     </LinearLayout>
 
-    <android.support.v4.widget.Space
+    <androidx.legacy.widget.Space
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
