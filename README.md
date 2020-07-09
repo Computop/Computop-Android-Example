@@ -11,14 +11,14 @@ Android SDK for [Computop](https://www.computop.com/).
 
 ## How to build
 
-    graldew installDebug
+    gradlew installDebug
     
 #### Build Requirements
 
 - JDK7, JDK8
-- Android Build Tools 27.0.3
-- Android SDK 27 
-- Android min SDK API 15
+- Android Build Tools 29.0.3
+- Android SDK 29 
+- Android min SDK API 17
 
 ## How to use
 
