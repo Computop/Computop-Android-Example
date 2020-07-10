@@ -1,4 +1,6 @@
-# Computop SDK  [ ![Download](https://api.bintray.com/packages/exozetag/maven/computop-android-sdk/images/download.svg) ](https://bintray.com/exozetag/maven/computop-android-sdk/_latestVersion) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)  [![Gradle Version](https://img.shields.io/badge/gradle-6.5.1-green.svg)](https://docs.gradle.org/current/release-notes.html)
+# Computop SDK  
+[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)  
+[![Gradle Version](https://img.shields.io/badge/gradle-6.5.1-green.svg)](https://docs.gradle.org/current/release-notes.html)
 
 ## Introduction
 

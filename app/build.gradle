@@ -69,7 +69,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Computop sdk dependency
-    implementation 'com.computop.sdk:lib:1.5.207'
+    implementation 'com.computop.sdk:lib:1.6.228'
 
     implementation 'androidx.core:core-ktx:1.3.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
