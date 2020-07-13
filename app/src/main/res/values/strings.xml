@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Computop Android Example</string>
 
+    <string name="basket_default_posttext">Items in the Basket, click to buy now!</string>
+
     <!-- computop -->
     <string name="computop_merchant_id" translatable="false">test</string>
     <string name="computop_auth_url" translatable="false">https://computop.example.com/api/auth</string>

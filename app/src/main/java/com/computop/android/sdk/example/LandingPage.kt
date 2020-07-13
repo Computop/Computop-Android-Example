@@ -35,15 +35,16 @@ class LandingPage : Fragment() {
     private var disposable: Disposable? = null
     private var paymentDisposable: Disposable? = null
 
-    private val articles = ArrayList(Arrays.asList(
+    private val articles = ArrayList(listOf(
         Article().setName("Buildmaster 2013").setColor("Color: Black").setPrice("20").setImage(R.drawable.black),
         Article().setName("Golden Screws 42").setColor("Color: Gold").setPrice("40").setImage(R.drawable.gold),
         Article().setName("Silver Screws T3").setColor("Color: Silver").setPrice("10").setImage(R.drawable.silver)
     ))
 
     private val basket = ArrayList<Article>()
-
-    private var paymentMethodAdapter: PaymentMethodAdapter? = null
+    private val basketPostText by lazy { getString(R.string.basket_default_posttext) }
+    private val basketText: String
+        get() = "${basket.size} $basketPostText"
 
     private var computop: Computop? = null
 
@@ -65,8 +66,9 @@ class LandingPage : Fragment() {
         }
 
         binding.payOptions.setOnClickListener {
-            if (basket.isNotEmpty()) {
-                Actions.play(Actions.sizeTo(getView()!!.width.toFloat(), MathExtensions.dpToPx(300).toFloat(), 0.5f), binding.basketView)
+            val view = getView()
+            if (basket.isNotEmpty() && view != null) {
+                Actions.play(Actions.sizeTo(view.width.toFloat(), MathExtensions.dpToPx(300).toFloat(), 0.5f), binding.basketView)
             }
         }
     }
@@ -110,13 +112,13 @@ class LandingPage : Fragment() {
         val dividerItemDecoration = DividerItemDecoration(binding.paymentMethodsList.context, LinearLayoutManager.VERTICAL)
         binding.paymentMethodsList.addItemDecoration(dividerItemDecoration)
 
-        paymentMethodAdapter = PaymentMethodAdapter(this::payWithPaymentOption)
+        val paymentMethodAdapter = PaymentMethodAdapter(this::payWithPaymentOption)
         binding.paymentMethodsList.adapter = paymentMethodAdapter
 
-        //load payment methods
-        paymentDisposable = computop!!.requestPaymentMethods().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { paymentMethods: List<PaymentMethod?>, throwable: Throwable? ->
+        // load payment methods
+        paymentDisposable = computop?.requestPaymentMethods()?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe { paymentMethods: List<PaymentMethod?>, throwable: Throwable? ->
                 if (throwable != null) {
                     Log.e(TAG, "PaymentMethods error: ", throwable)
                     return@subscribe
@@ -127,7 +129,8 @@ class LandingPage : Fragment() {
                 paymentMethods.filterNotNull().forEach { paymentMethod ->
                     items.add(paymentMethod)
                 }
-                paymentMethodAdapter?.updateList(items)
+
+                paymentMethodAdapter.updateList(items)
             }
     }
 
@@ -136,23 +139,21 @@ class LandingPage : Fragment() {
 
         if (basket.size > 0) {
             Actions.play(Actions.sizeTo(requireView().width.toFloat(), MathExtensions.dpToPx(50).toFloat(), 0.5f), binding.basketView)
-            binding.basketText.text = "${basket.size} Items in the Basket, click to buy now!"
+            binding.basketText.text = basketText
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
 
-        if (computop != null) {
-            computop!!.clean()
-        }
+        computop?.clean()
 
         if (disposable != null && disposable?.isDisposed == false) {
-            disposable!!.dispose()
+            disposable?.dispose()
         }
 
         if (paymentDisposable != null && paymentDisposable?.isDisposed == false) {
-            paymentDisposable!!.dispose()
+            paymentDisposable?.dispose()
         }
     }
 
@@ -160,16 +161,18 @@ class LandingPage : Fragment() {
         setPayment(method.payment)
 
         //set payment method that has the right payment data, and checkout
+        disposable?.dispose()
         disposable = computop
             ?.withPaymentMethod(method)
             ?.setWebViewListener { Log.i(TAG, "[WebViewClient] onPageFinishedLoading") }
             ?.checkout()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe({ computopPaymentResponse: ComputopPaymentResponse ->
-                Log.v(TAG, "Payment received")
-                Log.v(TAG, computopPaymentResponse.toString())
-            }) { throwable: Throwable ->
+            ?.subscribe(
+                    { computopPaymentResponse: ComputopPaymentResponse ->
+                        Log.v(TAG, "Payment received")
+                        Log.v(TAG, computopPaymentResponse.toString())
+                    }) { throwable: Throwable ->
                 when (throwable) {
                     is ComputopError -> {
                         Log.e(TAG, "Computop Error $throwable")
@@ -195,9 +198,11 @@ class LandingPage : Fragment() {
         for (article in basket) {
             price += article.price?.toInt() ?: 0
         }
+
         payment.setParamWithKey("TransID", "****")
+        // change needed to smallest currency value e.g. cents
         payment.setParamWithKey("Amount", (price * 100).toString())
-        payment.setParamWithKey("Currency", "EUR") //for Wechat payment only CNY is supported
+        payment.setParamWithKey("Currency", "EUR") // for Wechat payment only CNY is supported
         payment.setParamWithKey("URLSuccess", "****")
         payment.setParamWithKey("URLNotify", "****")
         payment.setParamWithKey("URLFailure", "****")
@@ -226,7 +231,7 @@ class LandingPage : Fragment() {
         val severity = error.severity
         val category = error.category
         val details = error.details
-        val alertDialog = AlertDialog.Builder(context!!).create()
+        val alertDialog = AlertDialog.Builder(requireContext()).create()
         alertDialog.setTitle("Error")
         alertDialog.setMessage(
             """
@@ -240,8 +245,9 @@ class LandingPage : Fragment() {
 
 
                 """.trimIndent())
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK"
-        ) { dialog: DialogInterface, which: Int -> dialog.dismiss() }
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK") {
+            dialog: DialogInterface, _: Int -> dialog.dismiss()
+        }
         alertDialog.show()
     }
 
