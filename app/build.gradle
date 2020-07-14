@@ -1,19 +1,19 @@
 apply plugin: 'com.android.application'
-
-def supportLibVer = "27.1.1"
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.computop.android.sdk.example"
-        minSdkVersion 15
-        targetSdkVersion 27
+        minSdkVersion 16
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
     }
 
@@ -36,6 +36,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
@@ -52,7 +56,6 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/services/javax.annotation.processing.Processor'  // butterknife
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/license.txt'
@@ -66,43 +69,30 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Computop sdk dependency
-    implementation 'com.computop.sdk:lib:1.5.207'
+    implementation "com.computop.sdk:lib:$computopMobileSDKVersion"
 
-    implementation 'com.android.support:appcompat-v7:'+supportLibVer
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    implementation 'com.android.support:design:'+supportLibVer
-    implementation 'com.android.support:recyclerview-v7:'+supportLibVer
+    implementation "androidx.core:core-ktx:$androidCoreVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
-    implementation 'com.github.kibotu:common.android.utils:0.7.2'
-    implementation('com.github.kibotu:RecyclerViewPresenter:1.5.2') {
-        exclude group: 'com.android.support'
+    implementation "androidx.appcompat:appcompat:$androidxVersion"
+    implementation "androidx.recyclerview:recyclerview:$androidxVersion"
+
+    implementation "com.github.kibotu:common.android.utils:$kibotuUtilsVersion"
+    implementation "com.github.kibotu:AndroidAnimationsActions:$androidAnimationsActions"
+    implementation "com.nineoldandroids:library:$nineOldAndroidsVersion"
+
+    implementation "org.parceler:parceler-api:$parcelerVersion"
+    kapt "org.parceler:parceler:$parcelerVersion"
+
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+
+    implementation('com.mikepenz:materialdrawer:5.6.0@aar') {
+        transitive = true
     }
-    implementation 'com.github.kibotu:AndroidAnimationsActions:1.0.7'
-    implementation 'com.nineoldandroids:library:2.4.0'
 
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
-    // parcel
-    implementation 'org.parceler:parceler-api:1.1.11'
-    annotationProcessor 'org.parceler:parceler:1.1.11'
-
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.14'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-
-
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testImplementation 'junit:junit:4.12'
-}
-
-configurations.all {
-    resolutionStrategy.force "com.android.support:support-annotations:$supportLibVer"
-    resolutionStrategy.force "com.android.support:support-v4:$supportLibVer"
-    resolutionStrategy.force "com.android.support:support-v13:$supportLibVer"
-    resolutionStrategy.force "com.android.support:appcompat-v7:$supportLibVer"
-    resolutionStrategy.force "com.android.support:design:$supportLibVer"
-    resolutionStrategy.force "com.android.support:recyclerview-v7:$supportLibVer"
-    resolutionStrategy.force "com.android.support:cardview-v7:$supportLibVer"
+    testImplementation "junit:junit:$junitVersion"
 }

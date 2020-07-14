@@ -1,6 +1,6 @@
 package com.computop.android.sdk.example;
 
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 import org.parceler.Parcel;
 
