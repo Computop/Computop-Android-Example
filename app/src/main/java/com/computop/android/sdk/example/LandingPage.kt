@@ -157,8 +157,8 @@ class LandingPage : Fragment() {
         }
     }
 
-    private fun payWithPaymentOption(method: PaymentMethod) {
-        setPayment(method.payment)
+    private fun payWithPaymentOption(method: PaymentMethod, paymentType: String) {
+        setPayment(method.payment, paymentType)
 
         //set payment method that has the right payment data, and checkout
         disposable?.dispose()
@@ -189,11 +189,11 @@ class LandingPage : Fragment() {
     }
 
     /**
-     * Fill payment data with key, value
+     * Fill necessary payment data with key, value
      * @param payment
      * @return
      */
-    private fun setPayment(payment: Payment): Payment {
+    private fun setPayment(payment: Payment, paymentType: String): Payment {
         var price = 0
         for (article in basket) {
             price += article.price?.toInt() ?: 0

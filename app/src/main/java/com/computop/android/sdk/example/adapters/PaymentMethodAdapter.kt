@@ -9,7 +9,7 @@ import com.computop.android.sdk.example.R
 import com.computop.android.sdk.example.adapters.PaymentMethodAdapter.ViewHolder
 import kotlinx.android.synthetic.main.cell_payment.view.*
 
-class PaymentMethodAdapter(private var onItemClicked: ((paymentMethod: PaymentMethod) -> Unit)? = null) : RecyclerView.Adapter<ViewHolder>() {
+class PaymentMethodAdapter(private var onItemClicked: ((paymentMethod: PaymentMethod, paymentType: String) -> Unit)? = null) : RecyclerView.Adapter<ViewHolder>() {
 
     private var paymentMethods = mutableListOf<PaymentMethod>()
 
@@ -32,7 +32,7 @@ class PaymentMethodAdapter(private var onItemClicked: ((paymentMethod: PaymentMe
         notifyDataSetChanged()
     }
 
-    class ViewHolder(private val paymentMethodView: View, private val onItemClicked: ((paymentMethod: PaymentMethod) -> Unit)?) : RecyclerView.ViewHolder(paymentMethodView) {
+    class ViewHolder(private val paymentMethodView: View, private val onItemClicked: ((paymentMethod: PaymentMethod, paymentType: String) -> Unit)?) : RecyclerView.ViewHolder(paymentMethodView) {
         fun bind(paymentMethod: PaymentMethod) {
             paymentMethodView.paymentName.text = paymentMethod.localizedDescription
             paymentMethodView.paymentImage.setImageResource(paymentMethod.image)
@@ -41,7 +41,7 @@ class PaymentMethodAdapter(private var onItemClicked: ((paymentMethod: PaymentMe
 
             onItemClicked?.let { method ->
                 paymentMethodView.setOnClickListener {
-                    method.invoke(paymentMethod)
+                    method.invoke(paymentMethod, paymentMethod.localizedDescription)
                 }
             }
         }
