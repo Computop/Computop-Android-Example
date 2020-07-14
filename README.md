@@ -26,6 +26,10 @@ Android SDK for [Computop](https://www.computop.com/).
 
 Please refer to the PDF file in this repo [HowToImplementinAndroidProject.pdf](docs/HowToImplementinAndroidProject.pdf) for further details how to use the SDK
 
+To make this example app working two basic actions need to be done.
+- You need to create a merchant account at Computop and provide your credentials in the app
+- You need to provide payment parameters for the according payment methods. For more information on mandatory and optional parameters see [Computop](https://developer.computop.com/display/public/DOCCT/Payment+methods+in+Computop+Paygate)
+
 
 ## License
 
